@@ -1,3 +1,87 @@
+$main-color: #00D1B2;
+$white: #ffffff;
+$dark-gray: #1f191a;
+$light-gray: #dbdbdb;
+$lighter-gray: #ececec;
+
 @import 'mixins.scss';
-@import './components/navigation.scss';
-@import './components/searchbar.scss';
+@import './components/quick_peek.scss';
+@import './components/scroll_to_top_button.scss';
+
+.main-container {
+    // Set min-height to be 100vh minus (header height + footer height) -
+    // to make the main-container take all the space between the header and the footer.
+    min-height: calc(100vh - 13.25rem);
+    padding-bottom: 1.6rem;
+}
+
+// Style Navigation component
+.navbar {
+    @include box-shadow(1px, 2px, 16px, rgba(0, 0, 0, 0.2));
+
+    min-height: 3.25rem;
+
+    .navbar-item {
+
+        img {
+            max-height: 3.60rem;
+        }
+    }
+}
+
+// Style Footer component
+.footer {
+    min-height: 10rem;
+}
+
+// Style SearchBar component
+.search-bar {
+    position: relative;
+    margin-top: 1.5rem;
+
+    a.delete {
+        position: absolute;
+        top: 12px;
+        right: 10px;
+    }
+}
+
+// Style placeholders cards - RecipeCard component
+.card {
+    .card-image, .card-content {
+        cursor: pointer;
+    }
+}
+
+// Style empty placeholder cards - RecipeCard component
+.card-placeholder {
+    transform: scale(0.9);
+    opacity: 0.6;
+    transition: all 0.5s;
+
+    &.active {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .card-image, .card-content {
+        cursor: default;
+    }
+
+    .media-content .title {
+        min-height: 35px;
+        border-radius: 5px;
+        background-color: $light-gray;
+    }
+
+    .content {
+        min-height: 200px;
+        border-radius: 5px;
+        background-color: $lighter-gray;
+    }
+}
+
+// Style about page
+.about-page-container .section {
+    padding: 1.5rem;
+}

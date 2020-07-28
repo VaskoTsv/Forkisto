@@ -106,7 +106,7 @@
 // Media queries
 $mobile: 650;
 $tablet: 768;
-$desktop: 1280;
+$desktop: 1023;
 
 @mixin mobile {
     @media only screen and (max-width: $mobile * 1px) {
@@ -115,7 +115,7 @@ $desktop: 1280;
 }
 
 @mixin tablet {
-    @media only screen and (min-width: $tablet * 1px) {
+    @media only screen and (min-width: $mobile * 1px) and (max-width: $desktop * 1px) {
         @content;
     }
 }

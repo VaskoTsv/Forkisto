@@ -1,10 +1,15 @@
 import {observable, action} from 'mobx';
+import _ from 'lodash';
 
 export class RecipesStore {
     @observable
+    isLoading = false;
+    @observable
+    searchQuery = '';
+    @observable
     recipesList = [];
     @observable
-    isLoading = false;
+    recipeDetails = null;
 
     @action
     toggleIsLoading(isLoading) {
@@ -12,13 +17,23 @@ export class RecipesStore {
     }
 
     @action
-    setRandomRecipes(recipes) {
+    setSearchQuery(query) {
+        this.searchQuery = query;
+    }
+
+    @action
+    setRecipes(recipes) {
         this.recipesList = recipes;
     }
 
     @action
     appendRecipes(recipes) {
-        this.recipesList = this.recipesList.concat(recipes);
+        this.recipesList = _.uniqBy(this.recipesList.concat(recipes), 'id');
+    }
+
+    @action
+    setRecipeDetails(recipe) {
+        this.recipeDetails = recipe;
     }
 }
 

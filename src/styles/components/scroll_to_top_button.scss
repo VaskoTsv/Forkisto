@@ -1,0 +1,37 @@
+.scroll-to-top-button {
+    display: inline-block;
+    background-color: $main-color;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    border-radius: 100%;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    transition: background-color 0.3s, opacity 0.5s, visibility 0.5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1030;
+
+    &.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &::after {
+        @include font-size(30px);
+
+        content: '▲';
+        color: $white;
+        line-height: 55px;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: $dark-gray;
+    }
+
+    &:active {
+        background-color: $dark-gray;
+    }
+}

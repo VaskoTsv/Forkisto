@@ -1,0 +1,111 @@
+.quick-peek .modal {
+    @include box-shadow(1px, 2px, 16px, rgba(0, 0, 0, 0.2));
+    z-index: 1040; // Overpower the z-index of scrollToTop(1030) component button.
+
+    .modal-content {
+        height: 100%;
+        width: 100%;
+        padding: calculateRem(20px) calculateRem(45px);
+
+        .title {
+            @include font-size(21px);
+        }
+
+        .info-container {
+            display: flex;
+            flex-direction: row;
+            margin: calculateRem(25px) 0;
+
+            img {
+                border-radius: 5px;
+            }
+
+            .quick-info {
+                padding-left: calculateRem(20px);
+
+                .info {
+                    margin: calculateRem(15px);
+
+                    .info-badge:after {
+                        content: ', ';
+                    }
+
+                    .info-badge:last-child:after {
+                        content: '';
+                    }
+                }
+            }
+        }
+
+        .description-container {
+            h4 {
+                padding-bottom: calculateRem(15px);
+            }
+        }
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .modal-content::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .modal-content {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .modal-close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        &:after, &:before {
+            background-color: $dark-gray;
+        }
+    }
+
+    // Responsive styles
+    @include desktop() {
+        .modal-content {
+            width: 86vw;
+            margin: 1.8rem auto;
+            background-color: $white;
+            position: relative;
+        }
+    }
+
+    @include tablet() {
+        .modal-content {
+            width: 100vw;
+            height: 100vh;
+            max-height: 100vh;
+            margin: 0;
+            z-index: 1000;
+            background-color: $white;
+        }
+    }
+
+    @include mobile() {
+        .modal-content {
+            width: 100vw;
+            height: 100vh;
+            max-height: 100vh;
+            margin: 0;
+            background-color: $white;
+
+            .info-container {
+                flex-direction: column;
+
+                .quick-info {
+                    padding-left: 0;
+
+                    .info {
+                        margin: calculateRem(20px) 0;
+                    }
+                }
+            }
+        }
+    }
+
+}

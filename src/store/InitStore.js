@@ -1,20 +1,25 @@
 import React from 'react';
-import _recipesStore from './RecipesStore.js';
-import {observer} from "mobx-react";
 import {observable} from 'mobx';
+import {observer} from "mobx-react";
+import _recipesStore from './RecipesStore.js';
+import _quickPeekStore from './QuickPeekStore.js';
 
+// Export recipeStore to window for debugging.
 window.recipesStore = _recipesStore;
+window.quickPeekStore = _quickPeekStore;
 
-// Create new context - StoreContext
+// Create new context - StoreContext.
 export const StoreContext = React.createContext();
 
-// Create a provider Component - StoreProvider
+// Create a provider Component - StoreProvider that wraps over the entire App
+// to provide access of every component to mobx store.
 export class StoreProvider extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = observable({
             recipesStore: _recipesStore,
+            quickPeekStore: _quickPeekStore,
         })
     }
 
@@ -27,8 +32,8 @@ export class StoreProvider extends React.Component {
     }
 }
 
-// Create connectToStore hoc function - returning ConnectedComponent wrapping over passed Component
-// thus providing access to the later to mobx store via props.
+// Create connectToStore hoc function - thus providing access for the
+// passed component to mobx store via props.
 export const connectToStore = Component => {
     const ObservableComponent = observer(Component);
 
@@ -36,7 +41,7 @@ export const connectToStore = Component => {
         render() {
             return (
                 <StoreContext.Consumer>
-                    {store => <ObservableComponent store={store}/>}
+                    {store => <ObservableComponent {...this.props} store={store}/>}
                 </StoreContext.Consumer>
             )
         }
