@@ -1,0 +1,38 @@
+{
+  "name": "forkisto",
+  "version": "1.0.0",
+  "description": "Search and find recipes from all over the world",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "classnames": "^2.2.6",
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "bulma": "^0.9.0",
+    "components": "^0.1.0",
+    "layout": "^2.2.0",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.2",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "src": "^1.1.2",
+    "store": "^2.0.12",
+    "utils.js": "^1.0.1"
+  }
+}

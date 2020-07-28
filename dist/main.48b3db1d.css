@@ -1,0 +1,30 @@
+/*  Usage
+    p {
+      @include font-size(14px)
+    }
+*/
+/*  Usage
+    .foo {
+      @include center(both);
+    }
+    .foo-parent {
+      position: relative;
+    }
+*/
+/*  Usage: $start-color, $end-color, $orientation - vertical/horizontal/radial
+    .foo {
+        @include background-gradient(red, black, 'vertical');
+    }
+*/
+.navbar {
+  -webkit-box-shadow: 1px 2px 16px rgba(0, 0, 0, 0.2) ;
+  -moz-box-shadow: 1px 2px 16px rgba(0, 0, 0, 0.2) ;
+  box-shadow: 1px 2px 16px rgba(0, 0, 0, 0.2) ; }
+  .navbar .navbar-item img {
+    max-height: 3.60rem; }
+
+.search-bar {
+  margin-top: 1.5rem; }
+
+
+/*# sourceMappingURL=/main.48b3db1d.css.map */
