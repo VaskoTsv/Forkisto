@@ -77,3 +77,19 @@ export function handleAnimation(isActive, element, animationClass, msInterval = 
         toggleClass(!active, element, animationClass);
     }, msInterval);
 }
+
+export function toggleBodyScroll(isEnable) {
+    const docElement = document.documentElement;
+
+    if (!docElement) {
+        // In case there is no root document element(this nothingnever happen) - do nothitg
+        return;
+    }
+
+    if (!isEnable) {
+        docElement.style.overflow = 'hidden';
+        return;
+    }
+
+    docElement.style.overflow = 'initial';
+}

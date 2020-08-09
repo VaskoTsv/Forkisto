@@ -1,4 +1,5 @@
 import {observable, action} from 'mobx';
+import {toggleBodyScroll} from '../utils.js';
 
 export class QuickPeekStore {
     @observable
@@ -7,11 +8,13 @@ export class QuickPeekStore {
     @action
     openModal() {
         this.isShowModal = true;
+        toggleBodyScroll(false);
     }
 
     @action
     closeModal() {
         this.isShowModal = false;
+        toggleBodyScroll(true);
     }
 }
 
