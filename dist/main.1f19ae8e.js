@@ -60493,9 +60493,11 @@ var withPagination = function withPagination(Component) {
             scrollTop = _document$documentEle.scrollTop,
             scrollHeight = _document$documentEle.scrollHeight,
             clientHeight = _document$documentEle.clientHeight;
-        var scrolledToLastElement = Boolean(scrollTop + clientHeight > scrollHeight - 10);
+        var scrolledToLastElement = Boolean(scrollTop + clientHeight > scrollHeight - 80);
+        console.log('Scroll');
 
         if (scrolledToLastElement && !this.state.isLoading && !this.state.error && this.state.hasMore) {
+          console.log('should load next page');
           this.setState({
             shouldLoadNextPage: true
           });
@@ -61450,7 +61452,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "4504" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "5827" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
