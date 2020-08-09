@@ -42,9 +42,12 @@ export const withPagination = (Component) => {
 
         handleScroll() {
             const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
-            const scrolledToLastElement = Boolean(scrollTop + clientHeight > scrollHeight - 10);
+            const scrolledToLastElement = Boolean(scrollTop + clientHeight > scrollHeight - 80);
+
+            console.log('Scroll');
 
             if (scrolledToLastElement && !this.state.isLoading && !this.state.error && this.state.hasMore) {
+                console.log('should load next page');
                 this.setState({
                     shouldLoadNextPage: true
                 });
