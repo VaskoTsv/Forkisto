@@ -61191,7 +61191,73 @@ var ScrollToTopButton = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.ScrollToTopButton = ScrollToTopButton;
-},{"react":"../node_modules/react/index.js","classnames":"../node_modules/classnames/index.js"}],"components/QuickPeek.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","classnames":"../node_modules/classnames/index.js"}],"components/utils/KeyboardEventHandlerUtil.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.KeyboardEventHandlerUtil = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var KeyboardEventHandlerUtil = /*#__PURE__*/function (_React$Component) {
+  _inherits(KeyboardEventHandlerUtil, _React$Component);
+
+  var _super = _createSuper(KeyboardEventHandlerUtil);
+
+  function KeyboardEventHandlerUtil() {
+    _classCallCheck(this, KeyboardEventHandlerUtil);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(KeyboardEventHandlerUtil, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      document.addEventListener('keydown', function (e) {
+        console.log('on key down pressed', e, e.keyCode, e.key);
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {}
+  }, {
+    key: "render",
+    value: function render() {
+      return null;
+    }
+  }]);
+
+  return KeyboardEventHandlerUtil;
+}(_react.default.Component);
+
+exports.KeyboardEventHandlerUtil = KeyboardEventHandlerUtil;
+},{"react":"../node_modules/react/index.js"}],"components/QuickPeek.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -61202,6 +61268,8 @@ exports.default = exports.QuickPeek = void 0;
 var _react = _interopRequireDefault(require("react"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
+
+var _KeyboardEventHandlerUtil = require("../components/utils/KeyboardEventHandlerUtil.jsx");
 
 var _utils = require("../utils.js");
 
@@ -61257,7 +61325,7 @@ var QuickPeek = /*#__PURE__*/function (_React$Component) {
       var _this = this;
 
       var quickPeekStore = this.props.store.quickPeekStore;
-      return _react.default.createElement("div", {
+      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("div", {
         className: "quick-peek"
       }, _react.default.createElement("div", {
         className: (0, _classnames.default)('modal', {
@@ -61308,7 +61376,9 @@ var QuickPeek = /*#__PURE__*/function (_React$Component) {
         className: "title is-4"
       }, "Recipe instructions:"), _react.default.createElement("p", {
         className: "subtitle is-6"
-      }, this.getRecipeDetails.instructions)))));
+      }, this.getRecipeDetails.instructions))))), this.props.store.quickPeekStore.isShowModal ? _react.default.createElement(_KeyboardEventHandlerUtil.KeyboardEventHandlerUtil, {
+        handledKeys: ['Escape']
+      }) : null);
     }
   }, {
     key: "initialRecipeDetails",
@@ -61345,7 +61415,7 @@ exports.QuickPeek = QuickPeek;
 var _default = (0, _InitStore.connectToStore)(QuickPeek);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","classnames":"../node_modules/classnames/index.js","../utils.js":"utils.js","../store/InitStore.js":"store/InitStore.js"}],"App.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","classnames":"../node_modules/classnames/index.js","../components/utils/KeyboardEventHandlerUtil.jsx":"components/utils/KeyboardEventHandlerUtil.jsx","../utils.js":"utils.js","../store/InitStore.js":"store/InitStore.js"}],"App.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -61473,7 +61543,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "8248" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9860" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

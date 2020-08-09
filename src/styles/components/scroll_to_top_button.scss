@@ -30,4 +30,16 @@
         cursor: pointer;
         background-color: $dark-gray;
     }
+
+    @include tablet() {
+        :hover {
+            background-color: $main-color;
+        }
+    }
+
+    @include mobile() {
+        :hover {
+            background-color: $main-color;
+        }
+    }
 }

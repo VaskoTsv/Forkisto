@@ -114,6 +114,12 @@
   .scroll-to-top-button:hover {
     cursor: pointer;
     background-color: #1f191a; }
+  @media only screen and (min-width: 650px) and (max-width: 1023px) {
+    .scroll-to-top-button :hover {
+      background-color: #00D1B2; } }
+  @media only screen and (max-width: 650px) {
+    .scroll-to-top-button :hover {
+      background-color: #00D1B2; } }
 
 .main-container {
   min-height: calc(100vh - 13.25rem);
