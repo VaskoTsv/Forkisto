@@ -28,6 +28,7 @@
     "components": "^0.1.0",
     "deep-object-diff": "^1.1.0",
     "images": "^3.2.3",
+    "js-cookie": "^2.2.1",
     "layout": "^2.2.0",
     "lodash": "^4.17.19",
     "mobx": "^5.15.4",

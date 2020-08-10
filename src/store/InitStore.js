@@ -3,10 +3,14 @@ import {observable} from 'mobx';
 import {observer} from "mobx-react";
 import _recipesStore from './RecipesStore.js';
 import _quickPeekStore from './QuickPeekStore.js';
+import _userStore from './UserStore.js';
+import _loaderStore from './LoaderStore.js';
 
 // Export recipeStore to window for debugging.
+window.loaderStore = _loaderStore;
 window.recipesStore = _recipesStore;
 window.quickPeekStore = _quickPeekStore;
+window.userStore = _userStore;
 
 // Create new context - StoreContext.
 export const StoreContext = React.createContext();
@@ -18,8 +22,10 @@ export class StoreProvider extends React.Component {
         super(props);
 
         this.state = observable({
+            loaderStore: _loaderStore,
             recipesStore: _recipesStore,
             quickPeekStore: _quickPeekStore,
+            userStore: _userStore,
         })
     }
 

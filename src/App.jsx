@@ -1,20 +1,23 @@
-import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {StoreProvider} from './store/InitStore.js';
 import "bulma";
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Footer } from './components/Footer.jsx';
+import Navigation from './components/Navigation.jsx';
+import { About } from './components/pages/About.jsx';
+import Authentication from './components/pages/Authentication.jsx';
 import Home from './components/pages/Home.jsx';
-import {About} from './components/pages/About.jsx';
-import {Navigation} from './components/Navigation.jsx';
-import {Footer} from './components/Footer.jsx';
-import {ScrollToTopButton} from './components/ScrollToTopButton.jsx';
+import Lists from './components/pages/Lists.jsx';
 import QuickPeek from './components/QuickPeek.jsx';
+import { ScrollToTopButton } from './components/ScrollToTopButton.jsx';
+import { StoreProvider } from './store/InitStore.js';
+import Loader  from './components/Loader.jsx';
 
 export class App extends React.PureComponent {
     render() {
         return (
             <StoreProvider>
                 <BrowserRouter>
-                    <Navigation/>
+                    <Navigation />
 
                     <div className="main-container">
                         <Switch>
@@ -28,12 +31,23 @@ export class App extends React.PureComponent {
                                 path="/about"
                                 component={About}
                             />
+                            <Route
+                                exact
+                                path="/lists"
+                                component={Lists}
+                            />
+                            <Route
+                                exact
+                                path="/auth"
+                                component={Authentication}
+                            />
                         </Switch>
                     </div>
 
-                    <Footer/>
-                    <ScrollToTopButton/>
-                    <QuickPeek/>
+                    <Footer />
+                    <Loader />
+                    <ScrollToTopButton />
+                    <QuickPeek />
                 </BrowserRouter>
             </StoreProvider>
         );
