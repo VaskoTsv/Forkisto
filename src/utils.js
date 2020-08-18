@@ -1,4 +1,23 @@
-import {diff} from 'deep-object-diff';
+import { diff } from 'deep-object-diff';
+import Cookies from 'js-cookie';
+import { STRAPI_BASE_PROD, STRAPI_TOKEN_KEY } from './constants.js';
+
+function getHeaderOptions(url) {
+    let headersOptions = {
+        'Content-Type': 'application/json'
+    }
+
+    // In case we are making a call to the Strapi api - set the auth token(if there is any)
+    // in the request header
+    if (url.includes(STRAPI_BASE_PROD) && Cookies.get(STRAPI_TOKEN_KEY)) {
+        headersOptions = {
+            ...headersOptions,
+            'Authorization': `Bearer ${Cookies.get(STRAPI_TOKEN_KEY)}`
+        }
+    }
+
+    return headersOptions;
+}
 
 // GET data from endpoint
 export async function fetchData(urlString, queryOptions = {}) {
@@ -10,8 +29,64 @@ export async function fetchData(urlString, queryOptions = {}) {
 
     response = await fetch(url, {
         method: 'GET',
-        headers: {'Content-Type': 'application/json'},
+        headers: getHeaderOptions(urlString),
     })
+
+    if (response) {
+        responseJSON = await response.json()
+    }
+
+    return responseJSON;
+}
+
+export async function postData(urlString, params, queryOptions = {}) {
+    let response;
+    let responseJSON;
+
+    const url = new URL(urlString);
+    url.search = new URLSearchParams(queryOptions);
+
+    response = await fetch(url, {
+        method: 'POST',
+        headers: getHeaderOptions(urlString),
+        body: JSON.stringify(params),
+    });
+
+    if (response) {
+        responseJSON = await response.json()
+    }
+
+    return responseJSON;
+}
+
+export async function putData(urlString, params, queryOptions = {}) {
+    let response;
+    let responseJSON;
+
+    const url = new URL(urlString);
+    url.search = new URLSearchParams(queryOptions);
+
+    response = await fetch(url, {
+        method: 'PUT',
+        headers: getHeaderOptions(urlString),
+        body: JSON.stringify(params),
+    });
+
+    if (response) {
+        responseJSON = await response.json()
+    }
+
+    return responseJSON;
+}
+
+export async function deleteData(urlString) {
+    let response;
+    let responseJSON;
+
+    response = await fetch(urlString, {
+        method: 'DELETE',
+        headers: getHeaderOptions(urlString),
+    });
 
     if (response) {
         responseJSON = await response.json()

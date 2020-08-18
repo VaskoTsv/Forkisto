@@ -1,14 +1,14 @@
 import React from 'react';
-import {connectToStore} from '../../store/InitStore.js';
-import SearchBar from '../../components/SearchBar.jsx';
-import {generateRandomId} from '../../utils.js';
-import {API_BASE_URL, NUM_OF_RESULTS} from '../../constants.js';
 import RecipeCard from '../../components/RecipeCard.jsx';
-import {RecipeCardPlaceholder} from '../../components/RecipeCardPlaceholder.jsx';
+import { RecipeCardPlaceholder } from '../../components/RecipeCardPlaceholder.jsx';
+import SearchBar from '../../components/SearchBar.jsx';
 import {
-    withPagination,
-    UpdateStoreFromPaginationHelper
+    UpdateStoreFromPaginationHelper,
+    withPagination
 } from '../../components/utils/PaginationUtil.js';
+import { API_BASE_URL, NUM_OF_RESULTS } from '../../constants.js';
+import { connectToStore } from '../../store/InitStore.js';
+import { generateRandomId } from '../../utils.js';
 
 class Home extends React.Component {
     constructor(props) {
@@ -22,6 +22,10 @@ class Home extends React.Component {
         this.props.onLoadNextPage(this.fetchFromUrl, this.queryParams);
     }
 
+    componentWillUnmount() {
+        this.props.store.recipesStore.setRecipes([]);
+    }
+
     componentDidUpdate(prevProps) {
         this.updateStoreHelper.updateRecipes(prevProps.paginationData, this.props.paginationData);
     }
@@ -31,7 +35,7 @@ class Home extends React.Component {
     }
 
     get queryParams() {
-        const {recipesStore} = this.props.store;
+        const { recipesStore } = this.props.store;
 
         return {
             query: recipesStore.searchQuery,
@@ -43,7 +47,7 @@ class Home extends React.Component {
     }
 
     fetchRecipes() {
-        const {recipesStore} = this.props.store;
+        const { recipesStore } = this.props.store;
 
         // Clear recipeList from store and from withPagination HOC.
         recipesStore.setRecipes([]);
@@ -56,13 +60,13 @@ class Home extends React.Component {
     renderSearchBar() {
         return (
             <div className="column is-half-desktop is-offset-one-quarter-desktop is-full-tablet">
-                <SearchBar onFetchRecipes={() => this.fetchRecipes()}/>
+                <SearchBar onFetchRecipes={() => this.fetchRecipes()} />
             </div>
         )
     }
 
     renderRecipes() {
-        const {recipesStore} = this.props.store;
+        const { recipesStore } = this.props.store;
 
         if (!recipesStore.recipesList.length) {
             return null;
@@ -71,15 +75,15 @@ class Home extends React.Component {
         return recipesStore.recipesList.map(recipe => {
             return (
                 <div key={recipe.id}
-                     className="column is-one-fifth-desktop is-half-tablet is-full-mobile">
-                    <RecipeCard recipe={recipe}/>
+                    className="column is-one-fifth-desktop is-half-tablet is-full-mobile">
+                    <RecipeCard recipe={recipe} />
                 </div>
             );
         });
     }
 
     renderPlaceholders() {
-        const {recipesStore} = this.props.store;
+        const { recipesStore } = this.props.store;
 
         if (!recipesStore.isLoading) {
             return null;
@@ -90,8 +94,8 @@ class Home extends React.Component {
         return placeholders.map(() => {
             return (
                 <div key={generateRandomId()}
-                     className="column is-one-fifth-desktop is-half-tablet is-full-mobile">
-                    <RecipeCardPlaceholder/>
+                    className="column is-one-fifth-desktop is-half-tablet is-full-mobile">
+                    <RecipeCardPlaceholder />
                 </div>
             );
         });

@@ -1,0 +1,68 @@
+.heart-container {
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    position: relative;
+
+    .heart {
+        background-color: $light-gray;
+        display: inline-block;
+        cursor: pointer;
+        height: 18px;
+        margin: 0 10px;
+        position: relative;
+        top: 13px;
+        transform: rotate(-45deg);
+        width: 18px;
+
+        &.liked {
+            background-color: $red;
+
+            &:before, &:after {
+                background-color: $red;
+            }
+        }
+
+        &:before, &:after {
+            content: "";
+            background-color: $light-gray;
+            cursor: pointer;
+            border-radius: 50%;
+            height: 18px;
+            position: absolute;
+            width: 18px;
+        }
+
+        &:before {
+            top: -9px;
+            left: 0;
+        }
+
+        &:after {
+            left: 9px;
+            top: 0;
+        }
+    }
+
+    .modal-content {
+        width: auto;
+    }
+
+    .add-to-list-container {
+        background-color: $white;
+        border: 1px solid $light-gray;
+        width: 360px;
+        border-radius: 5px;
+        padding: 15px;
+        height: auto;
+
+        .lists-content {
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+
+}

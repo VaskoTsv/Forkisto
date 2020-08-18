@@ -1,4 +1,6 @@
 $main-color: #00D1B2;
+$blue: #3273dc;
+$red: #FF0000;
 $white: #ffffff;
 $dark-gray: #1f191a;
 $light-gray: #dbdbdb;
@@ -6,13 +8,28 @@ $lighter-gray: #ececec;
 
 @import 'mixins.scss';
 @import './components/quick_peek.scss';
+@import './components/loader.scss';
 @import './components/scroll_to_top_button.scss';
+@import 'components/like_recipe.scss';
 
 .main-container {
     // Set min-height to be 100vh minus (header height + footer height) -
     // to make the main-container take all the space between the header and the footer.
     min-height: calc(100vh - 13.25rem);
     padding-bottom: 1.6rem;
+}
+
+// Overwrite default bulma styles for media-content class
+.media-content {
+    @include tablet() {
+        overflow-x: initial !important;
+        overflow-y: initial !important;
+    }
+
+    @include mobile() {
+        overflow-x: initial !important;
+        overflow-y: initial !important;
+    }
 }
 
 // Style Navigation component
@@ -51,6 +68,26 @@ $lighter-gray: #ececec;
     .card-image, .card-content {
         cursor: pointer;
     }
+
+    .heart-container {
+        position: absolute;
+        top: 140px;
+        right: 0;
+    }
+
+    @include tablet() {
+        .heart-container {
+            bottom: 20px;
+            top: initial;
+        }
+    }
+
+    @include mobile() {
+        .heart-container {
+            bottom: 20px;
+            top: initial;
+        }
+    }
 }
 
 // Style empty placeholder cards - RecipeCard component
@@ -84,4 +121,32 @@ $lighter-gray: #ececec;
 // Style about page
 .about-page-container .section {
     padding: 1.5rem;
+}
+
+// Style authentication page
+.hero-body .container form .tabs {
+    a {
+        color: $light-gray;
+    }
+
+    li.is-active a {
+        color: $blue;
+    }
+}
+
+// Style CreateNewList component
+.create-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 15px 0;
+
+    button {
+        width: 30%;
+    }
+
+    input {
+        width: 60%;
+    }
 }

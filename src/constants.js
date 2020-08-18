@@ -4,3 +4,11 @@ export const IMAGE_BASE_URL = 'https://spoonacular.com/recipeImages/';
 export const PLACEHOLDER_IMAGE = 'https://bulma.io/images/placeholders/1280x960.png';
 
 export const NUM_OF_RESULTS = 20;
+
+// Strapi api constants
+export const USER_DATA_KEY = 'userData';
+export const STRAPI_TOKEN_KEY = 'strapiToken';
+
+export const STRAPI_BASE_PROD = 'https://forkisto-beckend.herokuapp.com/';
+export const STRAPI_BASE_DEV = 'http://localhost:1337/';
+

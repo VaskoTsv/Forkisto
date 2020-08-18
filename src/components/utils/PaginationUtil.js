@@ -1,6 +1,6 @@
 import React from 'react';
-import {API_KEY, NUM_OF_RESULTS} from '../../constants.js';
-import {fetchData, handleFetchError} from '../../utils.js';
+import { API_KEY, NUM_OF_RESULTS } from '../../constants.js';
+import { fetchData, handleFetchError } from '../../utils.js';
 
 // Create pagination hoc component - adding additional pagination functionality to the wrapped component.
 export const withPagination = (Component) => {
@@ -41,13 +41,10 @@ export const withPagination = (Component) => {
         }
 
         handleScroll() {
-            const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
             const scrolledToLastElement = Boolean(scrollTop + clientHeight > scrollHeight - 80);
 
-            console.log('Scroll');
-
             if (scrolledToLastElement && !this.state.isLoading && !this.state.error && this.state.hasMore) {
-                console.log('should load next page');
                 this.setState({
                     shouldLoadNextPage: true
                 });
@@ -66,7 +63,7 @@ export const withPagination = (Component) => {
                 currentPage: ++this.state.currentPage
             });
 
-            fetchData(url, {...options, ...this.paginationOptions}).then(data => {
+            fetchData(url, { ...options, ...this.paginationOptions }).then(data => {
                 if (data.code && data.message) {
                     handleFetchError(data);
 
@@ -95,9 +92,9 @@ export const withPagination = (Component) => {
         render() {
             return (
                 <Component {...this.props}
-                           paginationData={this.state}
-                           onClearFetchedData={() => this.clearFetchedData()}
-                           onLoadNextPage={(url, options) => this.loadNextPage(url, options)}
+                    paginationData={this.state}
+                    onClearFetchedData={() => this.clearFetchedData()}
+                    onLoadNextPage={(url, options) => this.loadNextPage(url, options)}
                 />
             )
         }
@@ -113,7 +110,7 @@ export class UpdateStoreFromPaginationHelper {
     }
 
     updateRecipes(previousData, currentData) {
-        const {recipesStore} = this.store;
+        const { recipesStore } = this.store;
 
         const shouldLoadNextPage = Boolean(
             currentData.shouldLoadNextPage &&
