@@ -18,22 +18,12 @@ export class Lists extends React.Component {
     }
 
     async componentDidMount() {
-        // If there is no active list, there are no recipes to be fetched.
-        if (!this.getActiveListId()) {
-            return;
-        }
-
         // Get the current active list recipes and save them in recipesStore.
         const recipes = await this.getListRecipes();
         this.props.store.recipesStore.setRecipes(recipes);
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        // If there is no active list, there are no recipes to be fetched.
-        if (!this.getActiveListId()) {
-            return;
-        }
-
         // When lists tab is changed, get the current active list recipes and save them in recipesStore.
         if (this.state.activeListId !== prevState.activeListId) {
             const recipes = await this.getListRecipes();
@@ -107,6 +97,10 @@ export class Lists extends React.Component {
 
         const {userStore, loaderStore} = this.props.store;
         const activeList = userStore.lists.filter(list => list.id === this.state.activeListId)[0];
+
+        if (!activeList) {
+            return;
+        }
 
         loaderStore.startLoader();
         try {
@@ -186,7 +180,7 @@ export class Lists extends React.Component {
     renderListContent() {
         const {userStore, recipesStore} = this.props.store;
 
-        if (!userStore.lists.length || !recipesStore.recipesList.length) {
+        if (!userStore.lists.length || !recipesStore.recipesList) {
             return null;
         }
 

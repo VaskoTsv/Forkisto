@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
-import { postData } from '../../utils.js';
+import { APIError, postData } from '../../utils.js';
 import { STRAPI_BASE_PROD, STRAPI_TOKEN_KEY, USER_DATA_KEY } from '../../constants.js';
 import { connectToStore } from '../../store/InitStore.js';
 
@@ -73,46 +73,50 @@ export class Authentication extends React.Component {
         }, {expires: 7});
     }
 
-    submitRegistration(e) {
+    async submitRegistration(e) {
         e.preventDefault();
         const {userStore, loaderStore} = this.props.store;
 
-        loaderStore.startLoader();
-        postData(`${STRAPI_BASE_PROD}auth/local/register`, this.registerData).then(data => {
-            if (data.error) {
-                alert(data.error);
-                return;
-            }
+        let data;
 
-            this.setUserDataCookies(data);
-            userStore.setUserData(data.user);
+        loaderStore.startLoader();
+        try {
+            data = await postData(`${STRAPI_BASE_PROD}auth/local/register`, this.registerData)
+        } catch (e) {
+            if (e instanceof APIError) {
+                alert(e.responseErrorMessage.messages[0].message);
+            }
+            return;
+        } finally {
             loaderStore.stopLoader();
-            this.props.history.push('/');
-        }).catch(e => {
-            alert(e.message);
-            loaderStore.stopLoader();
-        });
+        }
+
+        this.setUserDataCookies(data);
+        userStore.setUserData(data.user);
+        this.props.history.push('/');
     }
 
-    submitLogIn(e) {
+    async submitLogIn(e) {
         e.preventDefault();
         const {userStore, loaderStore} = this.props.store;
 
-        loaderStore.startLoader();
-        postData(`${STRAPI_BASE_PROD}auth/local`, this.loginData).then(data => {
-            if (data.error) {
-                alert(data.error);
-                return;
-            }
+        let data;
 
-            this.setUserDataCookies(data);
-            userStore.setUserData(data.user);
+        loaderStore.startLoader();
+        try {
+            data = await postData(`${STRAPI_BASE_PROD}auth/local`, this.loginData);
+        } catch (e) {
+            if (e instanceof APIError) {
+                alert(e.responseErrorMessage.messages[0].message);
+            }
+            return;
+        } finally {
             loaderStore.stopLoader();
-            this.props.history.push('/');
-        }).catch(e => {
-            alert(e.message);
-            loaderStore.stopLoader();
-        });
+        }
+
+        this.setUserDataCookies(data);
+        userStore.setUserData(data.user);
+        this.props.history.push('/');
     }
 
     renderRegisterForm() {

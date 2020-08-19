@@ -71,13 +71,14 @@ $lighter-gray: #ececec;
 
     .heart-container {
         position: absolute;
-        top: 140px;
-        right: 0;
+        bottom: 5px;
+        right: -2px;
     }
 
     @include tablet() {
         .heart-container {
             bottom: 20px;
+            right: 0;
             top: initial;
         }
     }
@@ -85,6 +86,7 @@ $lighter-gray: #ececec;
     @include mobile() {
         .heart-container {
             bottom: 20px;
+            right: 0;
             top: initial;
         }
     }

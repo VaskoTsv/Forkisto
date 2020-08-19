@@ -2,6 +2,27 @@ import { diff } from 'deep-object-diff';
 import Cookies from 'js-cookie';
 import { STRAPI_BASE_PROD, STRAPI_TOKEN_KEY } from './constants.js';
 
+// Extend and modify the default Error class
+export class APIError extends Error {
+    constructor(response, url) {
+        super(`Server responded with ${response.error}: ${response.statusCode} on URL: ${url}`);
+        this.response = response;
+        this.responseJSON = JSON.stringify(response.responseJSON);
+    }
+
+    get responseErrorMessage() {
+        if (!this.response || !this.response.error || !this.response.message) {
+            return false;
+        }
+
+        return {
+            ...this.response.message[0],
+            error: this.response.error,
+            statusCode: this.response.statusCode,
+        }
+    }
+}
+
 function getHeaderOptions(url) {
     let headersOptions = {
         'Content-Type': 'application/json'
@@ -54,6 +75,10 @@ export async function postData(urlString, params, queryOptions = {}) {
 
     if (response) {
         responseJSON = await response.json()
+    }
+
+    if (responseJSON.error) {
+        throw new APIError(responseJSON, urlString);
     }
 
     return responseJSON;

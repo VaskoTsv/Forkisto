@@ -5,15 +5,15 @@
     position: relative;
 
     .heart {
-        background-color: $light-gray;
         display: inline-block;
         cursor: pointer;
-        height: 18px;
+        height: 16px;
         margin: 0 10px;
+        background-color: $light-gray;
         position: relative;
         top: 13px;
         transform: rotate(-45deg);
-        width: 18px;
+        width: 16px;
 
         &.liked {
             background-color: $red;
@@ -28,18 +28,18 @@
             background-color: $light-gray;
             cursor: pointer;
             border-radius: 50%;
-            height: 18px;
+            height: 16px;
             position: absolute;
-            width: 18px;
+            width: 16px;
         }
 
         &:before {
-            top: -9px;
+            top: -8px;
             left: 0;
         }
 
         &:after {
-            left: 9px;
+            left: 8px;
             top: 0;
         }
     }
