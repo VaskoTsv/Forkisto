@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { STRAPI_BASE_PROD } from '../constants.js';
 import { connectToStore } from '../store/InitStore.js';
-import { putData } from '../utils.js';
+import { APIError, putData } from '../utils.js';
 import CreateNewList from './CreateNewList.jsx';
 
 export class LikeRecipe extends React.Component {
@@ -56,20 +56,25 @@ export class LikeRecipe extends React.Component {
         this.updateList(list, recipes);
     }
 
-    updateList(list, recipes) {
+    async updateList(list, recipes) {
         const {userStore, loaderStore} = this.props.store;
+        let data;
 
         loaderStore.startLoader();
-        putData(`${STRAPI_BASE_PROD}lists/${list.id}`, {recipes: recipes}).then(data => {
-            const updatedList = {...data, user: data.user.id};
-            userStore.updateList(updatedList);
+        try {
+            data = await putData(`${STRAPI_BASE_PROD}lists/${list.id}`, {recipes: recipes});
+        } catch (e) {
+            if (e instanceof APIError) {
+                alert(e.responseErrorMessage.messages[0].message);
+            }
+            return;
+        } finally {
+            loaderStore.stopLoader();
+        }
 
-            this.setState({isAddToListOpen: false});
-            loaderStore.stopLoader();
-        }).catch(e => {
-            alert(e.message);
-            loaderStore.stopLoader();
-        });
+        const updatedList = {...data, user: data.user.id};
+        userStore.updateList(updatedList);
+        this.setState({isAddToListOpen: false});
     }
 
     renderAddToListModal() {

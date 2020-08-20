@@ -5,6 +5,8 @@ import { USER_DATA_KEY } from '../constants.js';
 // This is needed, because Strapi returns null if there are no recipes in list.recipes variable
 // and our front end logic is based on list.recipes being an array at all times.
 function modifyEmptyRecipes(lists) {
+    // TODO this is a quick fix, it is not a good practise to modify the data directly,
+    //  implement some kind of a pure function solution in the future.
     lists.forEach(list => {
         if (!list.recipes) {
             list.recipes = [];
@@ -13,6 +15,7 @@ function modifyEmptyRecipes(lists) {
 }
 
 const storedUser = Cookies.getJSON(USER_DATA_KEY);
+
 if (storedUser) {
     modifyEmptyRecipes(storedUser.lists);
 }
@@ -57,6 +60,7 @@ export class UserStore {
 
     @action
     setUserData(user) {
+        modifyEmptyRecipes(user.lists);
         this.id = user.id;
         this.username = user.username;
         this.email = user.email;

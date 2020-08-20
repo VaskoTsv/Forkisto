@@ -1,5 +1,5 @@
 import React from 'react';
-import { postData } from '../utils.js';
+import { APIError, postData } from '../utils.js';
 import { STRAPI_BASE_PROD } from '../constants.js';
 import { connectToStore } from '../store/InitStore.js';
 
@@ -26,20 +26,25 @@ export class CreateNewList extends React.Component {
         this.setState({listName: e.target.value});
     }
 
-    createNewList() {
+    async createNewList() {
         const {userStore, loaderStore} = this.props.store;
+        let data;
 
         loaderStore.startLoader();
-        postData(`${STRAPI_BASE_PROD}lists`, this.listParams).then(data => {
-            // Add new list to the user's lists
-            userStore.addToLists({...data, user: data.user.id});
-            this.setState({listName: ''});
+        try {
+            data = await postData(`${STRAPI_BASE_PROD}lists`, this.listParams)
+        } catch (e) {
+            if (e instanceof APIError) {
+                alert(e.responseErrorMessage.messages[0].message);
+            }
+            return;
+        } finally {
             loaderStore.stopLoader();
-        }).catch(e => {
-            alert(e.message);
-            this.setState({listName: ''});
-            loaderStore.stopLoader();
-        });
+        }
+
+        // Add new list to the user's lists
+        userStore.addToLists({...data, user: data.user.id});
+        this.setState({listName: ''});
     }
 
     render() {

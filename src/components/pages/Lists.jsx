@@ -2,7 +2,7 @@ import React from 'react';
 import { connectToStore } from '../../store/InitStore.js';
 import classNames from 'classnames';
 import { API_BASE_URL, API_KEY, STRAPI_BASE_PROD } from '../../constants.js';
-import { deleteData, fetchData } from '../../utils.js';
+import { APIError, deleteData, fetchData } from '../../utils.js';
 import RecipeCard from '../RecipeCard.jsx';
 import CreateNewList from '../CreateNewList.jsx';
 
@@ -66,30 +66,31 @@ export class Lists extends React.Component {
         this.isFetchingRecipes = true;
     }
 
-    handleDeleteList() {
+    async handleDeleteList() {
         const {userStore, loaderStore} = this.props.store;
         const listName = userStore.lists.find(list => list.id === this.state.activeListId).name;
+        let data;
+
+        if (!listName) return;
 
         const confirmDeleteDialog = confirm(`Are you sure you want to delete the "${listName}" list?`);
 
-        if (!confirmDeleteDialog) {
-            return;
-        }
+        if (!confirmDeleteDialog) return;
 
         loaderStore.startLoader();
-        deleteData(`${STRAPI_BASE_PROD}lists/${this.state.activeListId}`).then(data => {
-            if (!data.id) {
-                alert('Error on deleting list!');
-                return;
+        try {
+            data = await deleteData(`${STRAPI_BASE_PROD}lists/${this.state.activeListId}`);
+        } catch (e) {
+            if (e instanceof APIError) {
+                alert(e.responseErrorMessage.messages[0].message);
             }
+            return;
+        } finally {
+            loaderStore.stopLoader();
+        }
 
-            userStore.removeFromLists(data);
-            this.setState({activeListId: this.getActiveListId});
-            loaderStore.stopLoader();
-        }).catch(e => {
-            alert(e.message);
-            loaderStore.stopLoader();
-        });
+        userStore.removeFromLists(data);
+        this.setState({activeListId: this.getActiveListId()});
     }
 
     async getListRecipes() {
